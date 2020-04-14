@@ -16,7 +16,7 @@ python app.py
 open http://127.0.0.1:8001/
 ```
 
-To manually update and cache the worldometers.info data: 
+If running for the first time, you must fill the cache of worldometer.info data. To manually update this: 
 
 `python -m model.worldometer`
 
