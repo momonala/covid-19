@@ -1,6 +1,7 @@
 import logging
 import os
 import re
+import sys
 from glob import glob
 from typing import List
 
@@ -61,7 +62,15 @@ class WorldOMeterDataFetcher:
     @staticmethod
     def _read_from_cache():
         """Read the latest csv file from the cache."""
-        cached_file = sorted(glob("model/*.csv"))[0]
+        try:
+            cached_file = sorted(glob("model/*.csv"))[0]
+        except IndexError as e:
+            logger.error(
+                "Cache is empty."
+                " Please run `python -m model.worldometer` to update the cache before starting the app."
+            )
+            sys.exit(1)
+
         logger.info(f"Using cached worldometer {cached_file}")
         return pd.read_csv(cached_file)
 
@@ -130,7 +139,7 @@ class WorldOMeterDataFetcher:
         data = _normalize_population_names(population_df, corona_df)
 
         _last_updated = self._data_dicts["corona"]["last_updated"]
-        _save_path = os.path.join("data", f"worldometer_{_last_updated}.csv")
+        _save_path = os.path.join("model", f"worldometer_{_last_updated}.csv")
         data.to_csv(_save_path, index=False)
         logger.info(f"saved cached worldometer csv to {_save_path}")
 
