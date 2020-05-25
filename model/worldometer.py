@@ -25,6 +25,7 @@ class WorldOMeterDataFetcher:
             "corona": {
                 "url": "https://www.worldometers.info/coronavirus/#countries",
                 "columns": [
+                    "idx",
                     "Country",
                     "Total Cases",
                     "New Cases",
@@ -37,6 +38,7 @@ class WorldOMeterDataFetcher:
                     "Deaths/1M pop",
                     "Total Tests",
                     "Tests/1M pop",
+                    "Population",
                     "Continent",
                 ],
             },
@@ -79,7 +81,7 @@ class WorldOMeterDataFetcher:
             return self._read_from_cache()
 
         corona_df = self._get_worldometer_data_single_source("corona")
-        corona_df = corona_df.drop(["Continent"], axis=1)
+        corona_df = corona_df.drop(["Continent", "idx", "Population"], axis=1)
         corona_df["Case Fatality Ratio"] = np.round(
             corona_df["Total Deaths"] / corona_df["Total Cases"] * 100, 2
         )
