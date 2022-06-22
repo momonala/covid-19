@@ -4,6 +4,6 @@ dash_core_components==1.8.1
 dash_html_components==1.0.2
 dash_table==4.6.1
 dateutil
-numpy==1.18.2
+numpy==1.22.0
 pandas==1.0.3
 requests==2.22.0
